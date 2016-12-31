@@ -7,7 +7,7 @@ if (!defined('__TYPECHO_ROOT_DIR__'))
  *
  * @package CompressHTML
  * @author 情留メ蚊子
- * @version 1.0.0.0
+ * @version 1.0.0.1
  * @link http://www.94qing.com/
  */
 class CompressHTML_Plugin implements Typecho_Plugin_Interface {
@@ -19,7 +19,8 @@ class CompressHTML_Plugin implements Typecho_Plugin_Interface {
      * @throws Typecho_Plugin_Exception
      */
     public static function activate() {
-        Typecho_Plugin::factory('Widget_Archive')->beforeRender = array('CompressHTML_Plugin', 'Widget_Archive_beforeRender');
+        Typecho_Plugin::factory('index.php')->begin = array('CompressHTML_Plugin', 'Widget_index_begin');
+        //Typecho_Plugin::factory('Widget_Archive')->beforeRender = array('CompressHTML_Plugin', 'Widget_Archive_beforeRender');
     }
 
     /**
@@ -62,6 +63,10 @@ class CompressHTML_Plugin implements Typecho_Plugin_Interface {
      * @return void
      */
     public static function personalConfig(Typecho_Widget_Helper_Form $form) {
+    }
+
+    public static function Widget_index_begin() {
+        ob_start('CompressHTML_Plugin::qlwz_ob_handler');
     }
 
     public static function Widget_Archive_beforeRender() {
